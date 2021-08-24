@@ -9,7 +9,7 @@ router.route("/").get(ReviewbooksCtrl.apiGetBooks);
 router
     .route("/book")
     .post(BookCtrl.apiPostBook)
-    .put(BookCtrl.apiUpdateBook);
-    // .delete(BookCtrl.apiDeleteReview);
+    .put(BookCtrl.apiUpdateBook)
+    .delete(BookCtrl.apiDeleteReview);
 
 export default router

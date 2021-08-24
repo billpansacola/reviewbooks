@@ -41,4 +41,17 @@ export default class BooksDAO {
             return { error: e };
         }
     }
+
+    static async deleteBook(bookId) {
+        try {
+            const deleteResponse = await books.deleteOne({
+                book_id: bookId
+            });
+
+            return deleteResponse;
+        } catch (e) {
+            console.error("Unable to delete book: " + e);
+            return { error: e };
+        }
+    }
 }

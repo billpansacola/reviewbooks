@@ -40,4 +40,17 @@ export default class BookCtrl {
             res.status(500).json({error: e.message});
         }
     }
+
+    static async apiDeleteReview(req, res, next) {
+        try {
+            const bookId = req.body.book_id;
+
+            const ReviewResponse = await BooksDAO.deleteBook(
+                bookId,
+            );
+            res.json({status: "success"});
+        } catch (e) {
+            res.status(500).json({error: e.message});
+        }
+    }
 }
