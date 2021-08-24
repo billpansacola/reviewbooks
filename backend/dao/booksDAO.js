@@ -29,4 +29,16 @@ export default class BooksDAO {
             return { error: e };
         }
     }
+
+    static async updateBook(bookId, name, description, loc) {
+        try {
+            const updateResponse = await books.updateOne(
+                {book_id: bookId},
+                {$set: {book_id: bookId, name: name, description: description, locations: loc}}
+            );
+        } catch (e) {
+            console.error("unable to update book: " + e);
+            return { error: e };
+        }
+    }
 }
