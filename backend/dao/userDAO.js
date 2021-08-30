@@ -1,3 +1,5 @@
+import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectId;
 let user;
 
 export default class UserDAO {
@@ -34,5 +36,45 @@ export default class UserDAO {
             console.error( 'Unable to convert cursor to array or problem counting documents: ' + e);
             return { usersList: [], totalNumUsers: 0 };
         }
+    }
+
+    static async getUserBook(id) {
+        try {
+            const pipeline = [
+              {
+                  $match: {
+                      user_id: id,
+                  },
+              },
+                    {
+                        $lookup: {
+                            from: "book",
+                            let: {
+                                id: "$user_id",
+                            },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ["$user_id", "$$id"],
+                                        },
+                                    },
+                                },
+
+                            ],
+                            as: "books",
+                        },
+                    },
+                    {
+                        $addFields: {
+                            books: "$books",
+                        },
+                    },
+                ]
+            return await user.aggregate(pipeline).next()
+          } catch (e) {
+            console.error(`Something went wrong in getUserBook: ${e}`)
+            throw e
+          }
     }
 }

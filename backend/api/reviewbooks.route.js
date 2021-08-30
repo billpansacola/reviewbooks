@@ -7,6 +7,7 @@ import UserCtrl from "./user.controller.js"
 const router = express.Router();
 // router.route("/").get((req,res) => res.send("hello"));
 router.route("/").get(ReviewbooksCtrl.apiGetBooks);
+router.route("/users/:id").get(UserCtrl.apiGetUsersBook);
 router.route("/users").get(UserCtrl.apiGetUsers);
 
 router

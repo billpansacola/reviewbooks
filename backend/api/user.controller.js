@@ -25,4 +25,19 @@ export default class UserCtrl {
         }
         res.json(response)
     }
+
+    static async apiGetUsersBook(req, res, next) {
+      try {
+        let id = req.params.id || {}
+        let book = await UserDAO.getUserBook(id);
+        if(!book) {
+          res.status(404).json({error: "Book not found"});
+          return;
+        }
+        res.json(book);
+      } catch (e) {
+        console.log('api, ' + e);
+        res.status(500).json({error: e});
+      }
+    }
 }
